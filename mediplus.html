@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediCare Hospital Management</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">🏥 <span>MediCare HMS</span></div>
+  <nav>
+    <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+    <button class="nav-btn" data-tab="patients">Patients</button>
+    <button class="nav-btn" data-tab="doctors">Doctors</button>
+    <button class="nav-btn" data-tab="appointments">Appointments</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="tab active">
+    <h2>Dashboard</h2>
+    <div class="stats">
+      <div class="stat-card blue"><h3 id="stat-patients">0</h3><p>Patients</p></div>
+      <div class="stat-card green"><h3 id="stat-doctors">0</h3><p>Doctors</p></div>
+      <div class="stat-card purple"><h3 id="stat-appts">0</h3><p>Appointments</p></div>
+    </div>
+    <div class="welcome">
+      <h3>Welcome to MediCare Hospital Management System</h3>
+      <p>Manage patients, doctors, and appointments efficiently.</p>
+    </div>
+  </section>
+
+  <!-- PATIENTS -->
+  <section id="patients" class="tab">
+    <div class="section-header">
+      <h2>Patients</h2>
+      <button class="btn primary" onclick="openPatientForm()">+ Add Patient</button>
+    </div>
+    <input type="text" id="patientSearch" placeholder="Search by name..." oninput="renderPatients()">
+    <table id="patientsTable">
+      <thead>
+        <tr>
+          <th>ID</th><th>Name</th><th>Age</th><th>Gender</th>
+          <th>Phone</th><th>Disease</th><th>Doctor</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- DOCTORS -->
+  <section id="doctors" class="tab">
+    <div class="section-header">
+      <h2>Doctors</h2>
+      <button class="btn primary" onclick="openDoctorForm()">+ Add Doctor</button>
+    </div>
+    <table id="doctorsTable">
+      <thead>
+        <tr>
+          <th>ID</th><th>Name</th><th>Specialization</th>
+          <th>Phone</th><th>Fees (₹)</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- APPOINTMENTS -->
+  <section id="appointments" class="tab">
+    <div class="section-header">
+      <h2>Appointments</h2>
+      <button class="btn primary" onclick="openApptForm()">+ Book Appointment</button>
+    </div>
+    <table id="apptsTable">
+      <thead>
+        <tr>
+          <th>ID</th><th>Patient</th><th>Doctor</th>
+          <th>Date</th><th>Time</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+</main>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3 id="modalTitle">Form</h3>
+    <form id="modalForm"></form>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
