@@ -1,0 +1,26 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Dr. Smith",
+      "specialization": "Cardiology",
+      "phone": "555-0101",
+      "fees": 150
+    },
+    {
+      "id": 2,
+      "name": "Dr. Jane",
+      "specialization": "Pediatrics",
+      "phone": "555-0102",
+      "fees": 100
+    },
+    {
+      "id": 3,
+      "name": "Dr. Lee",
+      "specialization": "Orthopedics",
+      "phone": "555-0103",
+      "fees": 200
+    }
+  ],
+  "next": 4
+}
