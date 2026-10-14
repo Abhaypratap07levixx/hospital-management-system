@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediPlus — Hospital Management System</title>
+  <meta name="description" content="MediPlus: Modern hospital management system for patients, doctors and appointments.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── Sidebar ───────────────────────────────── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">✚</div>
+    <div class="logo-text">
+      <span class="logo-main">MediPlus</span>
+      <span class="logo-sub">HMS v2.0</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <button class="nav-btn active" data-tab="dashboard" id="nav-dashboard">
+      <span class="nav-icon">⊞</span>
+      <span class="nav-label">Dashboard</span>
+      <span class="nav-badge active-dot"></span>
+    </button>
+    <button class="nav-btn" data-tab="patients" id="nav-patients">
+      <span class="nav-icon">👥</span>
+      <span class="nav-label">Patients</span>
+    </button>
+    <button class="nav-btn" data-tab="doctors" id="nav-doctors">
+      <span class="nav-icon">🩺</span>
+      <span class="nav-label">Doctors</span>
+    </button>
+    <button class="nav-btn" data-tab="appointments" id="nav-appointments">
+      <span class="nav-icon">📅</span>
+      <span class="nav-label">Appointments</span>
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="user-avatar">A</div>
+      <div>
+        <div class="user-name">Admin</div>
+        <div class="user-role">Super Admin</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ── Main Content ──────────────────────────── -->
+<div class="main-wrapper">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <div class="page-title" id="pageTitle">Dashboard</div>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-time" id="topbarTime"></div>
+      <div class="topbar-badge">🔔</div>
+    </div>
+  </header>
+
+  <main class="content">
+
+    <!-- ── DASHBOARD ── -->
+    <section id="dashboard" class="tab active">
+      <div class="section-heading">
+        <h1>Overview</h1>
+        <p class="sub">Real-time hospital statistics</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card teal" id="card-patients">
+          <div class="stat-icon">👥</div>
+          <div class="stat-body">
+            <div class="stat-num" id="stat-patients">0</div>
+            <div class="stat-label">Total Patients</div>
+          </div>
+          <div class="stat-wave"></div>
+        </div>
+        <div class="stat-card violet" id="card-doctors">
+          <div class="stat-icon">🩺</div>
+          <div class="stat-body">
+            <div class="stat-num" id="stat-doctors">0</div>
+            <div class="stat-label">Active Doctors</div>
+          </div>
+          <div class="stat-wave"></div>
+        </div>
+        <div class="stat-card amber" id="card-appts">
+          <div class="stat-icon">📅</div>
+          <div class="stat-body">
+            <div class="stat-num" id="stat-appts">0</div>
+            <div class="stat-label">Appointments</div>
+          </div>
+          <div class="stat-wave"></div>
+        </div>
+      </div>
+
+      <div class="welcome-card">
+        <div class="welcome-glow"></div>
+        <div class="welcome-content">
+          <div class="welcome-icon">🏥</div>
+          <div>
+            <h2>Welcome to MediPlus HMS</h2>
+            <p>Manage your hospital's patients, doctors, and appointments efficiently from one beautiful dashboard.</p>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <button class="quick-btn" onclick="switchTab('patients'); openPatientForm()">+ Add Patient</button>
+          <button class="quick-btn" onclick="switchTab('doctors'); openDoctorForm()">+ Add Doctor</button>
+          <button class="quick-btn" onclick="switchTab('appointments'); openApptForm()">+ Book Appt</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PATIENTS ── -->
+    <section id="patients" class="tab">
+      <div class="section-heading">
+        <div>
+          <h1>Patients</h1>
+          <p class="sub">Manage patient records</p>
+        </div>
+        <button class="btn-primary" onclick="openPatientForm()" id="addPatientBtn">
+          <span>+</span> Add Patient
+        </button>
+      </div>
+
+      <div class="table-toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="patientSearch" class="search-input" placeholder="Search patients by name..." oninput="renderPatients()">
+        </div>
+      </div>
+
+      <div class="table-card">
+        <table id="patientsTable">
+          <thead>
+            <tr>
+              <th>ID</th><th>Name</th><th>Age</th><th>Gender</th>
+              <th>Phone</th><th>Disease</th><th>Doctor</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="empty-state" id="emptyPatients" style="display:none">
+          <div class="empty-icon">👤</div>
+          <p>No patients yet. Add your first patient!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── DOCTORS ── -->
+    <section id="doctors" class="tab">
+      <div class="section-heading">
+        <div>
+          <h1>Doctors</h1>
+          <p class="sub">Manage medical staff</p>
+        </div>
+        <button class="btn-primary" onclick="openDoctorForm()" id="addDoctorBtn">
+          <span>+</span> Add Doctor
+        </button>
+      </div>
+
+      <div class="table-card">
+        <table id="doctorsTable">
+          <thead>
+            <tr>
+              <th>ID</th><th>Name</th><th>Specialization</th>
+              <th>Phone</th><th>Fees (₹)</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="empty-state" id="emptyDoctors" style="display:none">
+          <div class="empty-icon">🩺</div>
+          <p>No doctors yet. Add your first doctor!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── APPOINTMENTS ── -->
+    <section id="appointments" class="tab">
+      <div class="section-heading">
+        <div>
+          <h1>Appointments</h1>
+          <p class="sub">Schedule & manage visits</p>
+        </div>
+        <button class="btn-primary" onclick="openApptForm()" id="addApptBtn">
+          <span>+</span> Book Appointment
+        </button>
+      </div>
+
+      <div class="table-card">
+        <table id="apptsTable">
+          <thead>
+            <tr>
+              <th>ID</th><th>Patient</th><th>Doctor</th>
+              <th>Date</th><th>Time</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="empty-state" id="emptyAppts" style="display:none">
+          <div class="empty-icon">📅</div>
+          <p>No appointments scheduled yet.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div><!-- /main-wrapper -->
+
+<!-- ── Modal ─────────────────────────────────── -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalTitle">Form</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="modalForm"></form>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast ──────────────────────────────────── -->
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+<script>
+  // Live clock
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('topbarTime').textContent =
+      now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // Sidebar toggle
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+    document.querySelector('.main-wrapper').classList.toggle('expanded');
+  });
+
+  // switchTab helper for quick-actions
+  function switchTab(tabName) {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabName).classList.add('active');
+    document.getElementById('nav-' + tabName).classList.add('active');
+    document.getElementById('pageTitle').textContent =
+      tabName.charAt(0).toUpperCase() + tabName.slice(1);
+    if (tabName === 'dashboard') loadStats();
+  }
+</script>
+</body>
+</html>
